@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Easy-Kart | User Profile - {{username}}
+{% endblock title %}
+
+{% block style %}
+{% load static %}
+
+#profile{
+    background-color: aliceblue;
+}
+
+h3,h5{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#private_prf_btn{
+    cursor: pointer;
+}
+
+{% endblock style %}
+
+
+{% block body %}
+{% for message in messages %}
+<div id="message" class="my-2 container">
+    <div class="text-center alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}.</strong>
+        <button class="btn-close" type="button" data-bs-dismiss="alert" area-label="close"></button>
+    </div>
+</div>
+{% endfor %}
+
+<div id="profile" class="p-4 container shadow-lg my-2 border-3 rounded m-auto">
+    {% if request.user.username == user.username %}
+    <div class="float-start">
+        <form id="update_img_form" action="{% url 'UpdateProfilePic' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <label for="upd_img" class="btn btn-outline-success">Edit Photo&nbsp;</label>
+            <input required class="d-none" type="file" name="image" id="upd_img" accept="image/*">
+        </form>
+    
+    <button id="default_img" class="btn btn-outline-success mt-2">Set Default</button>
+    </div>
+    <div class="float-end">
+        <button id="edit_btn" class="btn btn-outline-success">Edit Details</button>
+    </div>
+    {% endif %}
+    <div class="text-center">
+
+    <img class='my-2 rounded-circle' width="250px" src="/media/{{detail.user_img}}" alt="Image is not Available for some reason.">
+
+    <div id="details">
+        <h3><span id="f_name">{{user.first_name|title}}</span> <span id="l_name">{{user.last_name|title}}</span></h3>
+        <h5 id="user_email" class="pb-2">{{user.email}}</h5>
+        <h5 class="pb-2">Phone: <span id="user_phone">{{detail.phone_no}}</span></h5>
+    </div>
+
+    </div>
+
+</div>
+
+{% if items|length != 0 %}
+    <div class="container mt-3">
+        <h1 class="text-center text-light">Items for sale by:- {{username}}</h1>
+        <hr class="text-light">
+    </div>
+    
+    {% for item in items %}
+    <div class="col-md-10 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">{{item.item_name}}</h3>
+                <p class="card-text text-light mb-auto">{{item.item_description|truncatechars:220}}</p>
+                <p class="text-warning fs-5 fw-bold">&#8377; {{item.item_price}}</p>
+                <a href="{% url 'Item' item.item_name item.id %}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/{{item.item_landing_img}}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endif %}
+
+{% endblock body %}
+
+{% block script %}
+
+<script>
+    let first_name = document.getElementById('f_name').innerText;
+    let last_name = document.getElementById('l_name').innerText;
+    let user_email = document.getElementById('user_email').innerText;
+    let user_phone = document.getElementById('user_phone').innerText;
+    let editButton = document.getElementById('edit_btn');
+    let details = document.getElementById('details');
+
+    editButton.addEventListener('click', ()=>{
+        details.innerHTML = `
+            <form id="details_form" method="post" class="col-md-8 text-center m-auto"> {% csrf_token %}
+                <div class="my-3">
+                    <div class="mb-3">
+                        <input required placeholder="First Name" type="text"
+                        class="text-center form-control" value=${first_name} id="first_name" name="first_name">
+                        <small id="f_name_validate" class="form-text text-danger invalid-feedback">Should not contain any digits or white spaces.</small>
+                    </div>
+                    <div class="mb-3">
+                        <input required placeholder="Last Name" type="text"
+                        class="text-center form-control" value=${last_name} id="last_name" name="last_name">
+                        <small id="l_name_validate" class="form-text text-danger invalid-feedback">Should not contain any digits or white spaces.</small>
+                    </div>
+                    <div class="mb-3">
+                        <input required placeholder="Email Address" type="email"
+                        class="text-center form-control" value=${user_email} id="email_val" name="email">
+                        <small id="email_validate_" class="form-text text-danger invalid-feedback">Please Enter a valid email.</small>
+                    </div>
+                    <div class="mb-3">
+                        <input required placeholder="Phone Number" type="number"
+                        class="text-center form-control" value=${user_phone} id="phone_val" name="phone">
+                        <small id="phone_validate_" class="form-text text-danger invalid-feedback">Please Enter a valid Phone Number.</small>
+                    </div>
+            </div>
+            <button id="Submit_btn" type="submit" class="btn btn-outline-success col-sm-5">Submit</button>
+            </form>
+        `;
+
+        const email_validate = /^([_\.\-0-9\Sa-zA-Z]+)@([\_\.\-0-9a-z\SA-Z]+)\.([\Sa-zA-Z]){2,7}$/;        
+        const Submit_btn = document.getElementById('Submit_btn'); 
+        let first_inp = document.getElementById('first_name');
+        let last_inp = document.getElementById('last_name');
+        let email_inp = document.getElementById('email_val');
+
+        const first_name_validate = /^([A-Z\Sa-z]){4,10}$/;
+        const last_name_validate = /^([A-Z\Sa-z]){4,10}$/;
+
+        first_inp.addEventListener('blur', ()=>{
+            if (first_name_validate.test(first_inp.value)) {
+                first_inp.classList.remove('is-invalid');
+                first_inp.classList.add('is-valid');
+                Submit_btn.removeAttribute('disabled');
+            }
+            else{
+                first_inp.classList.add('is-invalid');
+                Submit_btn.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        last_inp.addEventListener('blur', ()=>{
+            if (last_name_validate.test(last_inp.value)) {
+                last_inp.classList.remove('is-invalid');
+                last_inp.classList.add('is-valid');
+                Submit_btn.removeAttribute('disabled');
+            }
+            else{
+                last_inp.classList.add('is-invalid');
+                Submit_btn.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        email_inp.addEventListener('blur', ()=>{
+            if (email_validate.test(email_inp.value)) {
+                email_inp.classList.remove('is-invalid');
+                email_inp.classList.add('is-valid');
+                Submit_btn.removeAttribute('disabled');
+            }
+            else{
+                email_inp.classList.add('is-invalid');
+                Submit_btn.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        document.getElementById('phone_val').addEventListener('blur', ()=>{
+            if(phone_val.value.length == 10){
+                phone_val.classList.remove('is-invalid');
+                phone_val.classList.add('is-valid');
+                Submit_btn.removeAttribute('disabled');
+            }
+            else{
+                phone_val.classList.add('is-invalid');
+                Submit_btn.setAttribute('disabled', 'disabled');
+            }
+        })
+    });
+
+    let default_img = document.getElementById('default_img');
+    default_img.addEventListener('click', ()=>{
+        let user = '{{user}}';
+        window.location.href = `/set_as_default_pic/${user}`;
+    });
+
+    let upd_img = document.getElementById('upd_img');
+    upd_img.addEventListener('change', ()=>{
+        document.getElementById("update_img_form").submit();
+    });
+
+</script>
+
+{% endblock script %}

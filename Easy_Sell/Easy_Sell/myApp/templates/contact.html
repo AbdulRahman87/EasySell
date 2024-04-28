@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Easy-Kart | Contact
+{% endblock title %}
+
+{% block style %}
+
+body{
+    background: url({% static 'IMG/contact_bg-1.jpg' %});
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#contact_form{
+    border-radius: 25px;
+    margin-top: 150px;
+    margin-left: 50px;
+}
+
+@media screen and (max-width: 770px){
+    #contact_form{
+        margin: 0px auto;
+        margin-top: 50px;
+    }
+}
+
+{% endblock style %}
+
+
+{% block body %}
+
+{% for message in messages %}
+    <div id="message" class="container my-2">
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            <strong>{{message}}.</strong>
+            <button class="btn-close" type="button" data-bs-dismiss="alert" area-label="close"></button>
+        </div>
+    </div>
+{% endfor %}
+
+<div id="contact_form" class="col-md-5 p-3">
+    <h1 class="text-light m-auto text-center">Contact to iDiscuss</h1>
+    <hr class="w-50 mb-0 border-bottom border-light border-3 m-auto mt-1">
+        <form method="post" action="" id="query_form" class="col-md-8 text-center m-auto"> {% csrf_token %}
+            <div class="my-3">
+                <div class="mb-3">
+                    <textarea required placeholder="Describe your Query or Send any Feedback..." class="text-center form-control" id="desc" name="query"
+                    rows="5"></textarea>
+                </div>
+            </div>
+            <input id="Submit_btn" value="Submit" class="btn btn-outline-success col-sm-5">
+        </form>
+</div>
+
+{% endblock body %}
+
+
+{% block script %}
+
+{% if not request.user.is_authenticated %}
+    <script>
+        let Submit_btn = document.getElementById('Submit_btn');
+        let desc = document.getElementById('desc');
+        desc.setAttribute('disabled', 'disabled');
+        Submit_btn.setAttribute('disabled', 'disabled');
+    </script>
+{% endif %}
+
+<script>
+    let Submit_btn = document.getElementById('Submit_btn');
+    Submit_btn.addEventListener('click', ()=>{
+        if(document.getElementById('desc').value.length < 25){
+            alert(`Your query should not be less than 25 characters!\nIt contains only ${document.getElementById('desc').value.length} characters.`);
+        }
+        else{
+            document.getElementById('query_form').submit();
+        }
+    });
+</script>
+
+
+{% endblock script %}

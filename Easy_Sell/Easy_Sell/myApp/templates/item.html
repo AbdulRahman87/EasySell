@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Easy Kart - {{item_name}}
+{% endblock title %}
+
+{% block style %}
+*{
+color: white;
+}
+
+#img_section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item_images{
+    width: 30%;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.item_img{
+width: 50%;
+border-radius: 15px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer_link {
+    text-decoration: none;
+    color: white;
+    font-size: 1.4rem;
+}
+
+@media screen and (max-width: 400px){
+.item{
+flex-direction: column;
+margin: auto;
+text-align: center;
+}
+.item_img{
+margin: auto;
+width: 100%;
+}
+.item_details{
+order: 2;
+margin-top: 10px;
+}
+.footer_link {
+    margin: 8px auto;
+    font-size: 1.2rem;
+}
+
+#img_section{
+    flex-direction: column;
+    align-items: center;
+}
+
+.item_images{
+    width: 90%;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+}
+
+@media screen and (min-width: 400px) and (max-width: 900px){
+.item{
+flex-direction: column;
+margin: auto;
+text-align: center;
+}
+.item_img{
+margin: auto;
+width: 80%;
+}
+.item_details{
+order: 2;
+margin-top: 10px;
+}
+
+#img_section{
+    flex-direction: column;
+    align-items: center;
+}
+
+.item_images{
+    width: 90%;
+    margin: 8px 5px;
+}
+
+}
+{% endblock style %}
+
+
+{% block body %}
+
+{% if item.item_type == 'CAR' %}
+<div class="mx-5 my-4 d-flex justify-content-between item">
+    <div class="item_details">
+        <h1>{{item.item_name}}</h1>
+        <h4>{{item.model}}</h4>
+        <p class="fs-5">About the Car: <span class="fst-italic">{{item.item_description}}</span></p>
+        <p class="fs-5">Seating Capacity: {{item.Seats}}</p>
+        <p class="fs-5">No of Air Bags: {{item.Air_Bags}}</p>
+        <p class="fs-5">Sunroof: {{item.Sunroof}}</p>
+        <p class="fs-5">Body Type: {{item.car_type}}</p>
+        <p class="fs-5">Fuel Type: {{item.fuel_type}}</p>
+        <p class="fs-5">Transmission: {{item.transmission}}</p>
+        <p class="fs-5">Top Speed: {{item.topSpeed}} KMPH</p>
+        <p class="fs-5">Driven: {{item.driven}} KM</p>
+        <p class="fs-5">Engine: {{item.power}} HP</p>
+        <p class="fs-5">Date of Purchase: {{item.age}}</p>
+        <p class="fs-5">Price: <span class="display-6 text-warning">{{item.item_price}}</span></p>
+        {% if request.user == item.item_owner %}
+            <a href="{% url 'EditItem' item item.item_type item.id %}" class="btn btn-outline-success px-4 fs-5">Edit</a>
+        {% else %}
+            <div class="btn-group">
+                <button id="about_the_owner" class="btn btn-success dropdown-toggle">About the Owner</button>
+            </div>
+            <ul class="dropdown-menu owner_dropdown">
+                <li class="dropdown-item"><a class="text-decoration-none text-dark" href="{% url 'UserProfile' _user=item.item_owner %}">Owner Name: {{item.item_owner.first_name}} {{item.item_owner.last_name}}</a></li>
+                <li class="dropdown-item">Owner Email: {{item.item_owner.email}} </li>
+            </ul>
+        {% endif %}
+    </div>
+    <img class="item_img my-auto" src="/media/{{item.item_landing_img}}" alt="">
+
+</div>
+{% elif item.item_type == 'BIKE' %}
+<div class="mx-5 my-4 d-flex justify-content-between item">
+    <div class="item_details">
+        <h1>{{item.item_name}}</h1>
+        <h4>{{item.model}}</h4>
+        <p class="fs-5">About the Bike: <span class="fst-italic">{{item.item_description}}</span></p>
+        <p class="fs-5">Top Speed: {{item.topSpeed}} KMPH</p>
+        <p class="fs-5">Driven: {{item.driven}} KM</p>
+        <p class="fs-5">Engine: {{item.engine}} cc</p>
+        <p class="fs-5">Date of Purchase: {{item.age}}</p>
+        <p class="fs-5">Price: <span class="display-6 text-warning">{{item.item_price}}</span></p>
+        {% if request.user == item.item_owner %}
+            <a href="{% url 'EditItem' item item.item_type item.id %}" class="btn btn btn-outline-success px-4 fs-5">Edit</a>
+        {% else %}
+            <div class="btn-group">
+                <button id="about_the_owner" class="btn btn-success dropdown-toggle">About the Owner</button>
+            </div>
+            <ul class="dropdown-menu owner_dropdown">
+                <li class="dropdown-item"><a class="text-decoration-none text-dark" href="{% url 'UserProfile' _user=item.item_owner %}">Owner Name: {{item.item_owner.first_name}} {{item.item_owner.last_name}}</a></li>
+                <li class="dropdown-item">Owner Email: {{item.item_owner.email}} </li>
+            </ul>
+        {% endif %}
+    </div>
+    <img class="item_img my-auto" src="/media/{{item.item_landing_img}}" alt="">
+
+</div>
+{% elif item.item_type == 'MOBILE' %}
+<div class="mx-5 my-4 d-flex justify-content-between item">
+    <div class="item_details">
+        <h1>{{item.item_name}}</h1>
+        <h4>{{item.model}}</h4>
+        <p class="fs-5">About the Phone: <span class="fst-italic">{{item.item_description}}</span></p>
+        {% if item.brand|lower != 'apple' %}
+        <p class="fs-5">RAM: {{item.ram}} GB</p>
+        {% endif %}
+        <p class="fs-5">ROM: {{item.rom}} GB</p>
+        <p class="fs-5">Battery: {{item.battery}} mAh</p>
+        <p class="fs-5">Processor: {{item.processor}}</p>
+        <p class="fs-5">Front Camera: {{item.front_camera}} MP</p>
+        <p class="fs-5">Rear Camera: {{item.rear_camea}} MP</p>
+        <p class="fs-5">Date of Purchase: {{item.age}}</p>
+        <p class="fs-5">Price: <span class="display-6 text-warning">{{item.item_price}}</span></p>
+        {% if request.user == item.item_owner %}
+            <a href="{% url 'EditItem' item item.item_type item.id %}" class="btn btn btn-outline-success px-4 fs-5">Edit</a>
+        {% else %}
+            <div class="btn-group">
+                <button id="about_the_owner" class="btn btn-success dropdown-toggle">About the Owner</button>
+            </div>
+            <ul class="dropdown-menu owner_dropdown">
+                <li class="dropdown-item"><a class="text-decoration-none text-dark" href="{% url 'UserProfile' _user=item.item_owner %}">Owner Name: {{item.item_owner.first_name}} {{item.item_owner.last_name}}</a></li>
+                <li class="dropdown-item">Owner Email: {{item.item_owner.email}} </li>
+            </ul>
+        {% endif %}
+    </div>
+    <img class="item_img my-auto" src="/media/{{item.item_landing_img}}" alt="">
+
+</div>
+{% elif item.item_type == 'LAPTOP' %}
+<div class="mx-5 my-4 d-flex justify-content-between item">
+    <div class="item_details">
+        <h1>{{item.item_name}}</h1>
+        <h4>{{item.model}}</h4>
+        <p class="fs-5">About the Laptop: <span class="fst-italic">{{item.item_description}}</span></p>
+        <p class="fs-5">Brand & Model: {{item.brand}} {{item.model}} </p>
+        <p class="fs-5">RAM: {{item.ram}} GB</p>
+        <p class="fs-5">Hard Disk: {{item.rom}} GB</p>
+        <p class="fs-5">Storage Type: {{item.storage_type}}</p>
+        <p class="fs-5">Battery: {{item.battery}} mAh</p>
+        <p class="fs-5">Processor: {{item.processor}}</p>
+        <p class="fs-5">Finger Print Sensor: {{item.finger_print_sensor}}</p>
+        <p class="fs-5">Touch Screen: {{item.touch_screen}}</p>
+        <p class="fs-5">WiFi: {{item.wifi}}</p>
+        <p class="fs-5">Blutooth: {{item.blutooth}}</p>
+        <p class="fs-5">Screen Size: {{item.screen_size}} inch.</p>
+        <p class="fs-5">Date of Purchase: {{item.age}}</p>
+        <p class="fs-5">Price: <span class="display-6 text-warning">{{item.item_price}}</span></p>
+        {% if request.user == item.item_owner %}
+            <a href="{% url 'EditItem' item item.item_type item.id %}" class="btn btn btn-outline-success px-4 fs-5">Edit</a>
+        {% else %}
+            <div class="btn-group">
+                <button id="about_the_owner" class="btn btn-success dropdown-toggle">About the Owner</button>
+            </div>
+            <ul class="dropdown-menu owner_dropdown">
+                <li class="dropdown-item"><a class="text-decoration-none text-dark" href="{% url 'UserProfile' _user=item.item_owner %}">Owner Name: {{item.item_owner.first_name}} {{item.item_owner.last_name}}</a></li>
+                <li class="dropdown-item">Owner Email: {{item.item_owner.email}} </li>
+            </ul>
+        {% endif %}
+    </div>
+    <img class="item_img my-auto" src="/media/{{item.item_landing_img}}" alt="">
+
+</div>
+{% elif item.item_type == 'OTHER' %}
+<div class="mx-5 my-4 d-flex justify-content-between item">
+    <div class="item_details">
+        <h1>{{item.item_name}}</h1>
+        <p class="fs-5">About the Item: <span class="fst-italic">{{item.item_description}}</span></p>
+        <p class="fs-5">Price: <span class="display-6 text-warning">{{item.item_price}}</span></p>
+        {% if request.user == item.item_owner %}
+            <a href="{% url 'EditItem' item item.item_type item.id %}" class="btn btn btn-outline-success px-4 fs-5">Edit</a>
+        {% else %}
+            <div class="btn-group">
+                <button id="about_the_owner" class="btn btn-success dropdown-toggle">About the Owner</button>
+            </div>
+            <ul class="dropdown-menu owner_dropdown">
+                <li class="dropdown-item"><a class="text-decoration-none text-dark" href="{% url 'UserProfile' _user=item.item_owner %}">Owner Name: {{item.item_owner.first_name}} {{item.item_owner.last_name}}</a></li>
+                <li class="dropdown-item">Owner Email: {{item.item_owner.email}} </li>
+            </ul>
+        {% endif %}
+    </div>
+    <img class="item_img my-auto" src="/media/{{item.item_landing_img}}" alt="">
+</div>
+{% endif %}
+{% if images|length != 0 %}
+<h3 class="text-center">Other Photos</h3>
+<hr class="container text-light">
+<div id="img_section" class="container">
+        {% for image in images %}
+            <img src="/media/{{image.item_img}}" alt="Image is not Available" class="item_images">
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if request.user == item.item_owner %}
+    {% if images|length == 0 %}
+        <form id="images_form" action="" class="w-75 m-auto" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="my-4">
+                <label for="item_images" class="form-label text-light">Upload your {{item.item_type|title}}'s Images:</label>
+                <input id="item_images" type="file" accept="image/*" class="form-control" name="item_images" multiple>
+            </div>
+        </form>
+    {% else %}
+    <form id="images_form" action="" class="w-75 m-auto" method="post" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="my-4">
+            <label for="item_images" class="form-label text-light">Upload your {{item.item_type|title}}'s other Images:</label>
+            <input id="item_images" type="file" accept="image/*" class="form-control" name="item_images" multiple>
+        </div>
+    </form>
+    {% endif %}
+    <button id='delete_obj' class="btn btn-outline-danger col-md-6 fs-5 d-block m-auto">Delete {{item.item_name}}</button>
+{% endif %}
+
+<hr class="text-secondary border border-secondary border-5">
+
+    <div class="footer p-5 text-center">
+        <a href="{% url 'RecentCars' %}" class="footer_link">Recent Cars</a>
+        <a href="{% url 'RecentBikes' %}" class="footer_link">Recent Bikes</a>
+        <a href="{% url 'RecentMobiles' %}" class="footer_link">Recent Mobiles</a>
+        <a href="{% url 'RecentLaptops' %}" class="footer_link">Recent Laptops</a>
+        <a href="{% url 'Contact' %}" class="footer_link">Contact Us</a>
+        <a href="{% url 'About' %}" class="footer_link">About Us</a>
+    </div>
+
+    <p class="text-light fs-4 text-center">&copy; All Rights Reserved.</p>
+    <a class="text-decoration-none" href="#head_section">
+        <h1 class="text-light fst-italic text-center">Easy-Kart</h1>
+    </a>
+
+{% endblock body %}
+
+{% block script %}
+
+<script src="{% static 'JS/jquery.js' %}"></script>
+
+<script>
+    $("#about_the_owner").click(() => {
+       $('.owner_dropdown').slideToggle('slow');
+    });
+
+    $("#item_images").change(()=>{
+        $('#images_form').submit();
+    });
+
+    let delete_url = '{% url 'DeleteItem' item.id %}';
+    document.getElementById('delete_obj').addEventListener('click', ()=>{
+        if(confirm('Do you really want to delete {{item.item_name}}')){
+            window.location.href = delete_url;
+        }
+    });
+
+</script>
+
+{% endblock script %}

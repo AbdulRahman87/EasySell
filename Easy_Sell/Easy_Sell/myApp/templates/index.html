@@ -1,0 +1,754 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Easy Kart - Sell your used items online easily from your home </title>
+    <link rel="shortcut icon" href="{% static 'IMG/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'CSS/stylesheet.css' %}">
+    <script src="{% static 'JS/jquery.js' %}"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        #head_section {
+            background: rgba(0, 0, 0, 0.5) url('static/IMG/background_1.jpg');
+            background-size: cover;
+            background-position: center;
+            transition: background 1s ease-in-out;
+            box-shadow: inset 0 0 500px black;
+            background-blend-mode: darken;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 25px;
+        }
+
+        #logo {
+            width: 8%;
+            cursor: pointer;
+        }
+
+        #easy_sell {
+            cursor: pointer;
+            margin: auto;
+        }
+
+        #login_button {
+            font-size: 18px;
+            padding: 8px 20px;
+        }
+
+        #sell_purchase {
+            font-size: 3rem;
+        }
+
+        #landing_text {
+            padding: 100px 250px;
+        }
+
+        hr {
+            margin: 0px;
+        }
+
+        #desired_item_online,
+        #ready {
+            font-size: 22px;
+        }
+
+        .ad_section {
+            padding: 70px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .img_section {
+            width: 50%;
+        }
+
+        .ad_img {
+            width: 80%;
+            border-radius: 10px;
+            transition: all 2s ease-in-out;
+        }
+
+        .ad_img_right {
+            width: 80%;
+            float: right;
+            border-radius: 10px;
+            transition: all 2s ease-in-out;
+        }
+
+        .ad_section_text {
+            text-align: end;
+        }
+
+        .add_text_para {
+            width: 70%;
+            float: right;
+            font-size: 1.3rem;
+        }
+
+        .order-2 {
+            order: 2;
+        }
+
+        .ad_section_text_left {
+            text-align: start;
+        }
+
+        .add_text_para_left {
+            width: 70%;
+            float: left;
+            font-size: 1.3rem;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer_link {
+            text-decoration: none;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        @media screen and (min-width: 150px) and (max-width: 400px) {
+            #landing_text {
+                padding: 0px;
+            }
+
+            #easy_sell {
+                font-size: 18px;
+                margin: auto;
+            }
+
+            #login_button {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            nav {
+                margin: 10px 10px;
+            }
+
+            #logo {
+                width: 15%;
+                cursor: pointer;
+            }
+
+            #landing_text {
+                padding: 50px 50px;
+            }
+
+            #sell_purchase {
+                font-size: 1.5rem;
+            }
+
+            #desired_item_online,
+            #ready {
+                font-size: 1rem;
+                padding: 0px 5px;
+            }
+
+            #signup_button,
+            #explore_button,
+            .buy_sell {
+                font-size: 1rem;
+                padding: 5px 8px;
+            }
+
+            .buy_sell {
+                margin: 3px 0px;
+            }
+
+
+            .footer_link {
+                margin: 8px auto;
+                font-size: 1.2rem;
+            }
+
+            .img_section {
+                width: 85%;
+            }
+
+            .ad_img {
+                width: 100%;
+            }
+
+            .ad_section {
+                padding: 50px 10px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .ad_section_text {
+                margin: 30px 10px 10px 10px;
+                text-align: center;
+            }
+
+            .add_text_para {
+                width: 80%;
+                margin: auto;
+                float: none;
+                font-size: 1rem;
+            }
+
+            .ad_text_heading {
+                font-size: 1.7rem;
+            }
+
+            .ad_img_right {
+                width: 100%;
+                float: none;
+            }
+
+            .order-2 {
+                order: 1;
+            }
+
+            .order_img {
+                order: 2;
+            }
+
+            .ad_section_text_left {
+                text-align: center;
+                margin: 30px 10px 10px 10px;
+            }
+
+            .add_text_para_left {
+                width: 80%;
+                margin: auto;
+                float: none;
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (min-width: 400px) and (max-width: 720px) {
+            #landing_text {
+                padding: 0px;
+            }
+
+            #easy_sell {
+                font-size: 25px;
+                margin: auto;
+            }
+
+            #login_button {
+                font-size: 15px;
+                padding: 5px 12px;
+            }
+
+            nav {
+                margin: 10px 10px;
+            }
+
+            #logo {
+                width: 15%;
+                cursor: pointer;
+            }
+
+            #landing_text {
+                padding: 80px 50px;
+            }
+
+            #sell_purchase {
+                font-size: 1.7rem;
+            }
+
+            #desired_item_online,
+            #ready {
+                font-size: 1.2rem;
+                padding: 0px 5px;
+            }
+
+            #signup_button,
+            #explore_button,
+            .buy_sell {
+                font-size: 1.2rem;
+                padding: 7px 12px;
+            }
+
+            .footer_link {
+                margin: 8px auto;
+                font-size: 1.5rem;
+            }
+
+            .img_section {
+                width: 90%;
+            }
+
+            .ad_img {
+                width: 100%;
+            }
+
+            .ad_section {
+                padding: 70px 10px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .ad_section_text {
+                margin: 50px 10px 10px 10px;
+                text-align: center;
+            }
+
+            .add_text_para {
+                width: 80%;
+                margin: auto;
+                float: none;
+                font-size: 1.3rem;
+            }
+
+            .ad_text_heading {
+                font-size: 2.4rem;
+            }
+
+            .ad_img_right {
+                width: 100%;
+                float: none;
+            }
+
+            .order-2 {
+                order: 1;
+            }
+
+            .order_img {
+                order: 2;
+            }
+
+            .ad_section_text_left {
+                text-align: center;
+                margin: 30px 10px 10px 10px;
+            }
+
+            .add_text_para_left {
+                width: 80%;
+                margin: auto;
+                float: none;
+                font-size: 1.3rem;
+            }
+
+            .ad_text_heading_left {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media screen and (min-width: 720px) and (max-width: 1000px) {
+            #landing_text {
+                padding: 0px;
+            }
+
+            #easy_sell {
+                font-size: 25px;
+                margin: auto;
+            }
+
+            #login_button {
+                font-size: 1.3rem;
+                padding: 5px 10px;
+            }
+
+            nav {
+                margin: 5px 20px;
+            }
+
+            #logo {
+                width: 10%;
+                cursor: pointer;
+            }
+
+            #landing_text {
+                padding: 100px 100px;
+            }
+
+            #sell_purchase {
+                font-size: 1.8rem;
+            }
+
+            #desired_item_online,
+            #ready {
+                font-size: 1.3rem;
+                padding: 0px 8px;
+            }
+
+            #signup_button,
+            #explore_button,
+            .buy_sell {
+                font-size: 1.3rem;
+                padding: 7px 15px;
+            }
+
+            .footer_link {
+                text-align: center;
+                margin: 8px auto;
+                padding: 5px 15px;
+            }
+
+            .ad_section {
+                padding: 70px 30px;
+            }
+
+            .ad_section_text {
+                text-align: end;
+                width: 50%;
+            }
+
+            .add_text_para {
+                width: 95%;
+            }
+
+            .ad_section_text_left {
+                text-align: start;
+                width: 50%;
+            }
+
+            .add_text_para_left {
+                width: 95%;
+            }
+
+            .img_section {
+                width: 50%;
+            }
+
+            .ad_img {
+                width: 85%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="head_section">
+        <nav>
+            <img src="{% static 'IMG/logo.png' %}" alt="Image is not Available" id="logo">
+            <h1 id="easy_sell" class="fst-italic">Easy-Kart</h1>
+            {% if request.user.is_authenticated %}
+                <a id="login_button" href="{% url 'UserProfile' request.user %}"
+            class="btn btn-outline-success">{{request.user}}</a>
+            {% else %}
+            <button id="login_button" data-bs-toggle="modal" data-bs-target="#loginmodal"
+            class="btn btn-outline-success">Log In</button>
+            {% endif %}
+        </nav>
+
+
+        {% for message in messages %}
+        <div id="message" class="container my-1">
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button class="btn-close" type="button" data-bs-dismiss="alert" area-label="close"></button>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        <div id="landing_text" class="text-center d-none">
+            <h2 id="sell_purchase" class="fw-bold">Sell or Purchace Used Item in just few clicks.</h2>
+            <p id="desired_item_online">Purchase your desired item online within a minute.</p>
+            {% if not request.user.is_authenticated %}
+            <p id="ready" class="py-1">Ready to Sell or Purchase?</p>
+            <a id="signup_button" data-bs-toggle="modal" data-bs-target="#signupmodal"
+                class="btn btn-outline-danger btn-lg mb-4">Sign Up</a><br>
+            <a href="{% url 'ExploreItems' %}" class="btn btn-outline-warning px-5 btn-lg buy_sell">Buy</a>
+            <a href="{% url 'SellYourItem' %}" class="btn mx-3 btn-outline-warning px-5 btn-lg buy_sell">Sell</a>
+            {% else %}
+            <a href="{% url 'ExploreItems' %}" class="btn btn-outline-warning px-5 btn-lg buy_sell">Buy</a>
+            <a href="{% url 'SellYourItem' %}" class="btn mx-3 btn-outline-warning px-5 btn-lg buy_sell">Sell</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="text-secondary border border-secondary border-5">
+
+    <div class="ad_section">
+        <div class="img_section">
+            <a href="{% url 'RecentBikes' %}"><img id="bike_img" class="ad_img" src="{% static 'IMG/bike__1.jpg' %}" alt=""></a>
+        </div>
+        <div class="ad_section_text">
+            <h1 class="ad_text_heading">Least Driven Bikes.</h1>
+            <p class="add_text_para">Own your dream least driven bikes in low amount and easy EMI. EMI will be
+                calculated depending on your income.</p>
+        </div>
+    </div>
+
+    <hr class="text-secondary border border-secondary border-5">
+
+    <div class="ad_section">
+        <div class="img_section order-2">
+            <a href="{% url 'RecentCars' %}"><img id="car_img" class="ad_img_right" src="{% static 'IMG/car_1.jpg' %}" alt=""></a>
+        </div>
+        <div class="ad_section_text_left order_img">
+            <h1 class="ad_text_heading_left">Least Driven Cars.</h1>
+            <p class="add_text_para_left">Own your dream least driven super car in low amount and easy EMI. EMI will be
+                calculated depending on your income.</p>
+        </div>
+    </div>
+
+    <hr class="text-secondary border border-secondary border-5">
+
+    <div class="ad_section">
+        <div class="img_section">
+            <a href="{% url 'RecentLaptops' %}"><img id="laptop_img" class="ad_img" src="{% static 'IMG/laptop_2.jpg' %}" alt=""></a>
+        </div>
+        <div class="ad_section_text">
+            <h1 class="ad_text_heading">Least Used Laptops.</h1>
+            <p class="add_text_para">Purchase least used laptop with high performance and good battery backup for
+                gaming, coding or other purposes.</p>
+        </div>
+    </div>
+
+    <hr class="text-secondary border border-secondary border-5">
+
+    <div class="ad_section">
+        <div class="img_section order-2">
+            <a href="{% url 'RecentMobiles' %}"><img id="mobile_img" class="ad_img_right" src="{% static 'IMG/mobile_1.jpg' %}" alt=""></a>
+        </div>
+        <div class="ad_section_text_left order_img">
+            <h1 class="ad_text_heading_left">Least Used Mobile Phones.</h1>
+            <p class="add_text_para_left">Purchase least used Mobile Phones with high quality camera and processor for
+                gaming or other purposes.</p>
+        </div>
+    </div>
+
+    <hr class="text-secondary border border-secondary border-5">
+
+    <div class="footer p-5 text-center">
+        <a href="{% url 'RecentCars' %}" class="footer_link">Recent Cars</a>
+        <a href="{% url 'RecentBikes' %}" class="footer_link">Recent Bikes</a>
+        <a href="{% url 'RecentMobiles' %}" class="footer_link">Recent Mobiles</a>
+        <a href="{% url 'RecentLaptops' %}" class="footer_link">Recent Laptops</a>
+        <a href="{% url 'Contact' %}" class="footer_link">Contact Us</a>
+        <a href="{% url 'About' %}" class="footer_link">About Us</a>
+    </div>
+
+    <p class="text-light fs-4 text-center">&copy; All Rights Reserved.</p>
+    <a class="text-decoration-none" href="#head_section">
+        <h1 class="text-light fst-italic text-center">Easy-Kart</h1>
+    </a>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+        <div class="modal-dialog text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginmodalLabel">Login to <span class="fst-italic">Easy-Kart</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method='post' action='{% url 'handleLogIn' %}'> {% csrf_token %}
+                        <div class="my-4 col-sm-8 m-auto">
+                            <input required type="text" class="form-control text-center" id="reg_id" name="user_name"
+                                placeholder="Enter your user name">
+                        </div>
+
+                        <div class="my-4 col-sm-8 m-auto">
+                            <input required type="password" class="form-control text-center" id="password"
+                                name="password" maxlength="8" placeholder="Enter your password">
+                        </div>
+
+                        <input type="submit" value="Login!" class="btn btn-primary d-block m-auto  col-md-6 fs-5 " />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="signupmodalLabel" aria-hidden="true">
+        <div class="modal-dialog text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupmodalLabel">Create your <span class="fst-italic">Easy-Kart</span>
+                        Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center text-danger fs-5">Please choose a unique username. Once your account is
+                        created you can't change your username.</div>
+                    <form id="signup_form" action="{% url 'HandleSignUp' %}" method="post" class="row g-3" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="col-md-12">
+                            <label for="u_name" class="form-label">U_Name:</label>
+                            <input required placeholder="Enter you user name" maxlength="50" type="text"
+                                class="form-control" name="u_name" id="u_name">
+                            <small id="u_namevalid" class="form-text text-danger invalid-feedback">Username must be
+                                between 5-10
+                                characters long and should not start with a number and should not contain any white
+                                spaces.</small>
+                            <small id="user_exist" class="form-text text-danger"> This username is already exist- <span
+                                    id="user_exist_name"></span></small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="fname" class="form-label">First Name:</label>
+                            <input required placeholder="Enter your first name" maxlength="50" type="text"
+                                class="form-control" name="fname" id="fname">
+                            <small id="fnamevalid" class="form-text text-danger invalid-feedback">First name should
+                                starts with
+                                capital letter other in small letters & First name should be from 3 to 10 characters
+                                long &
+                                should not contain any white spaces.</small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="lname" class="form-label">Last Name:</label>
+                            <input required placeholder="Enter your last name" maxlength="50" type="text"
+                                class="form-control" name="lname" id="lname">
+                            <small id="fnamevalid" class="form-text text-danger invalid-feedback">Last name should
+                                starts with
+                                capital letter other in small letters & Last name should be from 3 to 10 characters long
+                                &
+                                should not contain any white spaces.</small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="email" class="form-label">E-mail:</label>
+                            <input required placeholder="Enter your e-mail" maxlength="50" type="email"
+                                class="form-control" name="email" id="email">
+                            <small id="emailvalid" class="form-text text-danger invalid-feedback">Please enter a valid
+                                E-mail.</small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="phone" class="form-label">Phone:</label>
+                            <input required placeholder="Enter your phone number" type="number"
+                                class="form-control" name="phone" id="phone">
+                            <small id="phonevalid" class="form-text text-danger invalid-feedback">Please enter a valid
+                                phone number.</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pass" class="form-label">Password:</label>
+                            <input required maxlength='8' placeholder="Set your password" type="password"
+                                class="form-control" id="pass" name="pass">
+                            <small id="passwordvalid" class="form-text text-danger invalid-feedback">Password length
+                                must be 8.
+                                Password must starts with any alphabet and may be combination of digits & alphabet and
+                                must ends
+                                with any digit.</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="c_pass" class="form-label">Confirm Password:</label>
+                            <input required maxlength='8' placeholder="Confirm your password" type="password"
+                                class="form-control" id="c_pass" name="c_pass">
+                            <small id="passwordvalid" class="form-text text-danger invalid-feedback">Password not
+                                matched.</small>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="img" class="form-label">Upload your profile Pic:</label>
+                            <input id="img" type="file" accept="image/*" class="form-control" name="user_img">
+                        </div>
+                        <input id="btn" type="submit" value="SignUp"
+                            class="btn btn-primary mt-3 d-block m-auto col-md-6 fs-5"></input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    $('#landing_text').fadeIn(4000);
+    $('#landing_text').removeClass('d-none');
+
+    let counter = 1;
+    setInterval(() => {
+        if (counter <= 4) {
+            document.getElementById('head_section').style.backgroundImage = `url('static/IMG/background_${counter}.jpg')`;
+            counter += 1;
+        }
+        else {
+            counter = 1;
+        }
+    }, 5000);
+
+    let bike_counter = 2;
+    setInterval(() => {
+        if (bike_counter <= 3) {
+            $('#bike_img').attr('src', `static/IMG/bike__${bike_counter}.jpg`);
+            bike_counter++;
+        }
+        else {
+            bike_counter = 1;
+        }
+    }, 4000);
+
+    let car_counter = 2;
+    setInterval(() => {
+        if (car_counter <= 3) {
+            $('#car_img').attr('src', `static/IMG/car_${car_counter}.jpg`);
+            car_counter++;
+        }
+        else {
+            car_counter = 1;
+        }
+    }, 4000);
+
+    let laptop_counter = 3;
+    setInterval(() => {
+        if (laptop_counter <= 3) {
+            $('#laptop_img').attr('src', `static/IMG/laptop_${laptop_counter}.jpg`);
+            laptop_counter++;
+        }
+        else {
+            laptop_counter = 2;
+        }
+    }, 4000);
+
+    let mobile_counter = 2;
+    setInterval(() => {
+        if (mobile_counter <= 3) {
+            $('#mobile_img').attr('src', `static/IMG/mobile_${mobile_counter}.jpg`);
+            mobile_counter++;
+        }
+        else {
+            mobile_counter = 1;
+        }
+    }, 4000);
+
+    document.getElementById('user_exist').classList.add('d-none');
+    let user_input = document.getElementById('u_name');
+    user_input.addEventListener('input', () => {
+        if (user_names.includes(user_input.value)) {
+            document.getElementById('user_exist').classList.remove('d-none');
+            document.getElementById('user_exist_name').innerText = user_input.value;
+            document.getElementById('btn').classList.add('disabled');
+        }
+        else {
+            document.getElementById('user_exist').classList.add('d-none');
+            document.getElementById('btn').classList.remove('disabled');
+        }
+    });
+
+    let user_names = [];
+    {% for user in users %}
+    user_names.push('{{user.username}}');
+    {% endfor %}
+
+
+</script>
+<script src="{% static 'JS/script.js' %}"></script>
+<script src="{% static 'JS/Signup_validation.js' %}"></script>

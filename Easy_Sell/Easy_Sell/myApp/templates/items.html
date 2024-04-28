@@ -1,0 +1,483 @@
+{% extends 'base.html' %}
+
+{% block title %} Easy Kart - Explore Items {% endblock title %}
+
+{% block style %}
+select{
+cursor: pointer;
+}
+{% endblock style %}
+
+{% block body %}
+
+
+<form action="" method="post" id="filter_form"> {% csrf_token %}
+    <div class="container my-2 d-flex justify-content-between">
+        <select class="p-2 border-light rounded bg-dark text-light" name="category" id="item_cat">
+            <option value="random">ALL</option>
+            <option value="car">CAR</option>
+            <option value="bike">BIKE</option>
+            <option value="mobile">MOBILE</option>
+            <option value="laptop">LAPTOP</option>
+            <option value="other">OTHER</option>
+        </select>
+
+        <select class="p-2 car_options d-none border-light rounded bg-dark text-light" name="price_range"
+            id="car_range">
+            <option value="100000">Under 1 Lakh</option>
+            <option value="200000">Under 2 Lakh</option>
+            <option value="500000">Under 5 Lakh</option>
+            <option value="1000000">Under 10 Lakh</option>
+            <option value="1100000">Above 10 Lakh</option>
+        </select>
+
+
+        <select class="p-2 car_options d-none border-light rounded bg-dark text-light" name="body_type" id="type">
+            <option value="all">BODY TYPE</option>
+            <option value="sedan">SEDAN</option>
+            <option value="hatchback">HATCHBACK</option>
+            <option value="suv">SUV</option>
+            <option value="muv">MUV</option>
+            <option value="coupe">COUPE</option>
+        </select>
+
+        <select class="p-2 car_options d-none border-light rounded bg-dark text-light" name="driven_km" id="car_driven">
+            <option value="2000">Driven Under 2000 KM</option>
+            <option value="5000">Driven Under 5000 KM</option>
+            <option value="10000">Driven Under 10000 KM</option>
+            <option value="25000">Driven Under 25000 KM</option>
+            <option value="50000">Driven Under 50000 KM</option>
+            <option value="51000">Driven Above 50000 KM</option>
+        </select>
+
+
+        <select class="p-2 bike_options d-none border-light rounded bg-dark text-light" name="price_range"
+            id="bike_range">
+            <option value="25000">Under 25k</option>
+            <option value="50000">Under 50k</option>
+            <option value="80000">Under 80k</option>
+            <option value="100000">Under 100k</option>
+            <option value="110000">Above 100k</option>
+        </select>
+
+        <select class="p-2 bike_options d-none border-light rounded bg-dark text-light" name="driven_km"
+            id="bike_driven">
+            <option value="1000">Driven Under 1000 KM</option>
+            <option value="5000">Driven Under 5000 KM</option>
+            <option value="10000">Driven Under 10000 KM</option>
+            <option value="20000">Driven Under 20000 KM</option>
+            <option value="50000">Driven Under 50000 KM</option>
+            <option value="51000">Driven Above 50000 KM</option>
+        </select>
+
+
+        <select class="p-2 mobile_options d-none border-light rounded bg-dark text-light" name="brand"
+            id="mobile_brand">
+            <option value="all">ALL BRANDS</option>
+            <option value="samsung">SAMSUNG</option>
+            <option value="vivo">VIVO</option>
+            <option value="oppo">OPPO</option>
+            <option value="mi">MI</option>
+            <option value="infinix">INFINIX</option>
+            <option value="apple">APPLE</option>
+            <option value="realme">REALME</option>
+            <option value="google">GOOGLE</option>
+            <option value="oneplus">ONEPLUS</option>
+        </select>
+
+        <select class="p-2 mobile_options d-none border-light rounded bg-dark text-light" name="price_range"
+            id="mobile_range">
+            <option value="5000">Under 5k</option>
+            <option value="10000">Under 10k</option>
+            <option value="15000">Under 15k</option>
+            <option value="20000">Under 20k</option>
+            <option value="21000">Above 20k</option>
+        </select>
+
+        <select class="p-2 mobile_options d-none border-light rounded bg-dark text-light" name="ram_info"
+            id="mobile_ram_info">
+            <option value="2">2 GB RAM</option>
+            <option value="4">4 GB RAM</option>
+            <option value="6">6 GB RAM</option>
+            <option value="8">8 GB RAM</option>
+            <option value="9">8 GB+ RAM</option>
+        </select>
+
+        <select class="p-2 laptop_options d-none border-light rounded bg-dark text-light" name="brand"
+            id="laptop_brand">
+            <option value="all">ALL BRANDS</option>
+            <option value="dell">DELL</option>
+            <option value="lenovo">LENOVO</option>
+            <option value="asus">ASUS</option>
+            <option value="infinix">INFINIX</option>
+            <option value="apple">APPLE</option>
+            <option value="samsung">SAMSUNG</option>
+            <option value="acer">ACER</option>
+            <option value="hp">HP</option>
+        </select>
+
+        <select class="p-2 laptop_options d-none border-light rounded bg-dark text-light" name="price_range"
+            id="laptop_range">
+            <option value="10000">Under 10k</option>
+            <option value="15000">Under 15k</option>
+            <option selected value="20000">Under 20k</option>
+            <option value="30000">Under 30k</option>
+            <option value="31000">Above 30k</option>
+        </select>
+
+        <select class="p-2 laptop_options d-none border-light rounded bg-dark text-light" name="ram_info"
+            id="laptop_ram_info">
+            <option value="2">2 GB RAM</option>
+            <option value="4">4 GB RAM</option>
+            <option selected value="8">8 GB RAM</option>
+            <option value="16">16 GB RAM</option>
+            <option value="17">16 GB+ RAM</option>
+        </select>
+
+        <select class="p-2 laptop_options d-none border-light rounded bg-dark text-light" name="processor_info"
+            id="processor_info">
+            <option value="all">Processor</option>
+            <option value="i3">i3</option>
+            <option value="i5">i5</option>
+            <option value="i7">i7</option>
+            <option value="i9">i9</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary d-none" id="apply_button">Apply</button>
+    </div>
+</form>
+
+
+
+<div id="_items" class="row mb-2 container m-auto my-4">
+    {% for item in items %}
+    <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">{{item.item_name}}</h3>
+                <p class="card-text text-light mb-auto">{{item.item_description|truncatechars:220}}</p>
+                <p class="text-warning fs-5 fw-bold">&#8377; {{item.item_price}}</p>
+                <a href="{% url 'Item' item.item_name item.id %}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/{{item.item_landing_img}}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock body %}
+
+{% block script %}
+
+<script>
+    document.getElementById('item_cat').addEventListener('change', () => {
+        if ($('#item_cat').val() == 'car') {
+            $('.car_options').removeClass('d-none');
+            $('#apply_button').removeClass('d-none');
+            $('.bike_options').addClass('d-none');
+            $('.mobile_options').addClass('d-none');
+            $('.laptop_options').addClass('d-none');
+        }
+        else if ($('#item_cat').val() == 'bike') {
+            $('.bike_options').removeClass('d-none');
+            $('#apply_button').removeClass('d-none');
+            $('.car_options').addClass('d-none');
+            $('.mobile_options').addClass('d-none');
+            $('.laptop_options').addClass('d-none');
+        }
+        else if ($('#item_cat').val() == 'mobile') {
+            $('.mobile_options').removeClass('d-none');
+            $('#apply_button').removeClass('d-none');
+            $('.car_options').addClass('d-none');
+            $('.bike_options').addClass('d-none');
+            $('.laptop_options').addClass('d-none');
+        }
+        else if ($('#item_cat').val() == 'laptop') {
+            $('.laptop_options').removeClass('d-none');
+            $('#apply_button').removeClass('d-none');
+            $('.car_options').addClass('d-none');
+            $('.bike_options').addClass('d-none');
+            $('.mobile_options').addClass('d-none');
+        }
+        else if($('#item_cat').val() == 'other'){
+            $('#apply_button').removeClass('d-none');
+            $('.car_options').addClass('d-none');
+            $('.bike_options').addClass('d-none');
+            $('.mobile_options').addClass('d-none');
+            $('.laptop_options').addClass('d-none');
+        }
+        else {
+            $('.car_options').addClass('d-none');
+            $('.bike_options').addClass('d-none');
+            $('.mobile_options').addClass('d-none');
+            $('.laptop_options').addClass('d-none');
+            $('#apply_button').addClass('d-none');
+        }
+    });
+
+    $('#item_cat').change(() => {
+        if ($('#item_cat').val() == 'random') {
+            window.location.reload();
+        }
+    });
+
+    $('#mobile_brand').change(() => {
+        if ($('#mobile_brand').val() == 'apple') {
+            $('#mobile_range').addClass('d-none');
+            $('#mobile_ram_info').addClass('d-none');
+        }
+        else {
+            $('#mobile_range').removeClass('d-none');
+            $('#mobile_ram_info').removeClass('d-none');
+        }
+    });
+
+    $('#laptop_brand').change(() => {
+        if ($('#laptop_brand').val() == 'apple') {
+            $('#processor_info').addClass('d-none');
+        }
+        else {
+            $('#processor_info').removeClass('d-none');
+        }
+    });
+
+    $('#filter_form').submit((e) => {
+        e.preventDefault();
+
+        if ($('#item_cat').val() == 'car') {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ExploreItems" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    price_range: $('#car_range').val(),
+                    body_type: $('#type').val(),
+                    driven_km: $('#car_driven').val(),
+                    option_value: $('#item_cat').val()
+                },
+
+                success: (response) => {
+                    let html = ``;
+                    for (item in response.response) {
+                        html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-light my-0">Fuel Type: <span class="fst-italic">${response.response[item].fuel_type}</span></p>
+                <p class="text-light my-0">Driven: <span class="fst-italic">${response.response[item].driven}</span></p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                    }
+                    $('#_items').html(html);
+                    if (response.response.length == 0) {
+                        $('#_items').html('<h1 class="text-light text-center">Sorry... Results Not Found.</h1>');
+                    }
+                }
+            });
+        }
+        else if ($('#item_cat').val() == 'bike') {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ExploreItems" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    price_range: $('#bike_range').val(),
+                    driven_km: $('#bike_driven').val(),
+                    option_value: $('#item_cat').val()
+                },
+
+                success: (response) => {
+                    let html = ``;
+                    for (item in response.response) {
+                        html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-light my-0">Driven: <span class="fst-italic">${response.response[item].driven}</span></p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                    }
+                    $('#_items').html(html);
+                    if (response.response.length == 0) {
+                        $('#_items').html('<h1 class="text-light text-center">Sorry... Results Not Found.</h1>');
+                    }
+                }
+            });
+        }
+
+        else if ($('#item_cat').val() == 'mobile') {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ExploreItems" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    price_range: $('#mobile_range').val(),
+                    ram_info: $('#mobile_ram_info').val(),
+                    mobile_brand: $('#mobile_brand').val(),
+                    option_value: $('#item_cat').val()
+                },
+
+                success: (response) => {
+                    let html = ``;
+                    if ($('#mobile_brand').val() == 'apple') {
+                        for (item in response.response) {
+                            html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-light my-0">Rom: <span class="fw-bold">${response.response[item].rom} GB</span></p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                        }
+                    }
+                    else {
+                        for (item in response.response) {
+                            html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-light my-0">Ram: <span class="fw-bold">${response.response[item].ram} GB</span></p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                        }
+                    }
+                    $('#_items').html(html);
+                    if (response.response.length == 0) {
+                        $('#_items').html('<h1 class="text-light text-center">Sorry... Results Not Found.</h1>');
+                    }
+                }
+            });
+        }
+        else if ($('#item_cat').val() == 'laptop') {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ExploreItems" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    price_range: $('#laptop_range').val(),
+                    ram_info: $('#laptop_ram_info').val(),
+                    brand_info: $('#laptop_brand').val(),
+                    processor: $('#processor_info').val(),
+                    option_value: $('#item_cat').val()
+                },
+
+                success: (response) => {
+                    let html = ``;
+                    for (item in response.response) {
+                        html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-light my-0">Ram: <span class="fw-bold">${response.response[item].ram} GB</span></p>
+                <p class="text-light my-0">Rom: <span class="fw-bold">${response.response[item].rom} GB</span></p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                    }
+                    $('#_items').html(html);
+                    if (response.response.length == 0) {
+                        $('#_items').html('<h1 class="text-light text-center">Sorry... Results Not Found.</h1>');
+                    }
+                }
+            });
+        }
+
+        else if ($('#item_cat').val() == 'other') {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ExploreItems" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    option_value: $('#item_cat').val()
+                },
+
+                success: (response) => {
+                    let html = ``;
+                    for (item in response.response) {
+                        html += `
+                        <div class="col-md-12 m-auto">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-lg h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 fst-italic text-light">Easy-Kart</strong>
+                <h3 class="mb-0 text-light">${response.response[item].item_name}</h3>
+                <p class="card-text text-light mb-auto">${response.response[item].item_description.slice(0, 250)}</p>
+                <p class="text-warning fs-5 fw-bold">&#8377; ${response.response[item].item_price}</p>
+                <a href="ExploreItem/${response.response[item].item_name}/${response.response[item].id}" class="stretched-link btn btn-primary w-25 mt-3">View</a>
+            </div>
+            <div class="col-auto px-2 d-none my-auto rounded d-lg-block">
+                <img src="/media/${response.response[item].item_landing_img}" class="rounded" alt="Image is not Available." width="200"
+                    role="img" height="200">
+            </div>
+        </div>
+    </div>
+                        `;
+                    }
+                    $('#_items').html(html);
+                    if (response.response.length == 0) {
+                        $('#_items').html('<h1 class="text-light text-center">Sorry... Results Not Found.</h1>');
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock script %}

@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Easy-Kart | Sell your item in just few Steps
+{% endblock title %}
+
+
+{% block body %}
+{% if not request.user.is_authenticated %}
+<script>
+    alert("Please Login for Sell any Item!!!");
+    window.location.href = '/';
+</script>
+{% else %}
+
+<div class="container my-3">
+
+    {% for message in messages %}
+    <div id="message" class="container my-2">
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            <strong>{{message|safe}}.</strong>
+            <button class="btn-close" type="button" data-bs-dismiss="alert" area-label="close"></button>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <select class="p-2 border-light rounded bg-dark text-light" id="item_type">
+        <option value="initial">Select the Item</option>
+        <option value="CAR">CAR</option>
+        <option value="BIKE">BIKE</option>
+        <option value="MOBILE">MOBILE</option>
+        <option value="LAPTOP">LAPTOP</option>
+        <option value="OTHER">OTHER</option>
+    </select>
+
+    <form id="car_form" class="d-none" action="" enctype="multipart/form-data" method="post"> {% csrf_token %}
+
+        <div id="car_details" class="item_details">
+            <input type="hidden" name="item_type" class="item_type_value">
+            <div class="my-4">
+                <label for="car_name" class="text-light form-label">Enter Your Car Name:</label>
+                <input required type="text" class="form-control" id="car_name" name="car_name"
+                    placeholder="Company name of car">
+            </div>
+            <div class="my-4">
+                <label for="car_desc" class="text-light form-label">Enter Your Car Description:</label>
+                <textarea required rows="4" class="form-control" id="car_desc" name="car_desc"
+                    placeholder="Explain about your car"></textarea>
+            </div>
+            <div class="my-4">
+                <label for="car_model" class="text-light form-label">Enter Your Car Model:</label>
+                <input required type="text" class="form-control" id="car_model" name="car_model"
+                    placeholder="Model name of car">
+            </div>
+            <div id="car_options" class="d-flex justify-content-between">
+                <select required class="p-2 border-light rounded bg-dark text-light" name="seats" id="seats">
+                    <option value="">No of Seats</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="9">9</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="airbags" id="airbags">
+                    <option value="">No of AirBags</option>
+                    <option value="0">0</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="sunroof" id="sunroof">
+                    <option value="">Sunroof</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="body" id="body">
+                    <option value="">Body Type</option>
+                    <option value="SEDAN">SEDAN</option>
+                    <option value="COUPE">COUPE</option>
+                    <option value="HATCHBACK">HATCHBACK</option>
+                    <option value="SUV">SUV</option>
+                    <option value="MUV">MUV</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="fuel_type" id="fuel_type">
+                    <option value="">Fuel Type</option>
+                    <option value="PETROL">PETROL</option>
+                    <option value="DIESEL">DIESEL</option>
+                    <option value="LPG">LPG</option>
+                    <option value="CNG">CNG</option>
+                    <option value="ELECTRIC">ELECTRIC</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="transmission"
+                    id="transmission">
+                    <option value="">Transmission</option>
+                    <option value="MANUAL">MANUAL</option>
+                    <option value="AUTO">AUTO</option>
+                </select>
+            </div>
+            <div class="my-4">
+                <label for="car_top_speed" class="text-light form-label">Enter Top Speed of Car:</label>
+                <input required type="number" class="form-control" id="car_top_speed" name="car_top_speed"
+                    placeholder="Top speed of car in KMPH">
+            </div>
+            <div class="my-4">
+                <label for="car_driven" class="text-light form-label">Enter Driven KM:</label>
+                <input required type="number" class="form-control" id="car_driven" name="car_driven"
+                    placeholder="How many KM is driven your car">
+            </div>
+            <div class="my-4">
+                <label for="car_power" class="text-light form-label">Enter Power of Car:</label>
+                <input required type="number" class="form-control" id="car_power" name="car_power"
+                    placeholder="Enter the capacity of engine in HP">
+            </div>
+            <div class="my-4">
+                <label for="car_age" class="text-light form-label">Enter Date of Purchasing:</label>
+                <input required type="date" class="form-control" id="car_age" name="car_age">
+            </div>
+            <div class="my-4">
+                <label for="car_price" class="text-light form-label">Enter the Price of Car:</label>
+                <input required type="number" placeholder="Price of your car" class="form-control" id="car_price"
+                    name="car_price">
+            </div>
+            <div class="my-4">
+                <label for="car_landing_img" class="form-label text-light">Upload Car's landing Image:</label>
+                <input required id="car_landing_img" type="file" accept="image/*" class="form-control" name="car_landing_img">
+            </div>
+            <div class="my-4">
+                <label for="other_car_img" class="form-label text-light">Upload Car's other Images:</label>
+                <input id="other_car_img" class="other_images form-control" type="file" accept="image/*" name="other_car_img" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
+    </form>
+
+    <form id="bike_form" class="d-none" action="" enctype="multipart/form-data" method="post"> {% csrf_token %}
+        <input type="hidden" name="item_type" class="item_type_value">
+        <div id="bike_details" class="item_details ">
+            <div class="my-4">
+                <label for="bike_name" class="text-light form-label">Enter Your Bike Name:</label>
+                <input required type="text" class="form-control" id="bike_name" name="bike_name"
+                    placeholder="Company name of bike">
+            </div>
+            <div class="my-4">
+                <label for="bike_desc" class="text-light form-label">Enter Your BIke Description:</label>
+                <textarea required rows="4" class="form-control" id="bike_desc" name="bike_desc"
+                    placeholder="Explain about your bike"></textarea>
+            </div>
+            <div class="my-4">
+                <label for="bike_model" class="text-light form-label">Enter Your Bike Model:</label>
+                <input required type="text" class="form-control" id="bike_model" name="bike_model"
+                    placeholder="Model name of bike">
+            </div>
+            <div class="my-4">
+                <label for="bike_top_speed" class="text-light form-label">Enter Top Speed of Bike:</label>
+                <input required type="number" class="form-control" id="bike_top_speed" name="bike_top_speed"
+                    placeholder="Top speed of bike in KMPH">
+            </div>
+            <div class="my-4">
+                <label for="bike_driven" class="text-light form-label">Enter Driven KM:</label>
+                <input required type="number" class="form-control" id="bike_driven" name="bike_driven"
+                    placeholder="How many KM is driven your bike">
+            </div>
+            <div class="my-4">
+                <label for="bike_power" class="text-light form-label">Enter Power of BIke:</label>
+                <input required type="number" class="form-control" id="bike_power" name="bike_power"
+                    placeholder="Enter the capacity of engine in cc">
+            </div>
+            <div class="my-4">
+                <label for="bike_age" class="text-light form-label">Enter Date of Purchasing:</label>
+                <input required type="date" class="form-control" id="bike_age" name="bike_age">
+            </div>
+            <div class="my-4">
+                <label for="bike_price" class="text-light form-label">Enter the Price of Bike:</label>
+                <input required type="number" placeholder="Price of your bike" class="form-control" id="bike_price"
+                    name="bike_price">
+            </div>
+            <div class="my-4">
+                <label for="bike_landing_img" class="form-label text-light">Upload Bike's landing Image:</label>
+                <input required id="bike_landing_img" type="file" accept="image/*" class="form-control" name="bike_landing_img">
+            </div>
+            <div class="my-4">
+                <label for="other_bike_img" class="form-label text-light">Upload Bike's other Images:</label>
+                <input id="other_bike_img" class="other_images form-control" type="file" accept="image/*" name="other_bike_img" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
+    </form>
+
+    <form id="mobile_form" class="d-none" action="" enctype="multipart/form-data" method="post"> {% csrf_token %}
+        <input type="hidden" name="item_type" class="item_type_value">
+        <div id="mobile_details" class="item_details">
+            <div class="my-4">
+                <label for="mobile_name" class="text-light form-label">Enter Your Mobile Name:</label>
+                <input required type="text" class="form-control" id="mobile_name" name="mobile_name"
+                    placeholder="Full name of mobile">
+            </div>
+            <div class="my-2">
+                <select class="p-2 border-light rounded bg-dark text-light" id="mobile_brand" name="mobile_brand" required>
+                    <option value="">Select the Brand</option>
+                    <option value="SAMSUNG">SAMSUNG</option>
+                    <option value="VIVO">VIVO</option>
+                    <option value="OPPO">OPPO</option>
+                    <option value="INFINIX">INFINIX</option>
+                    <option value="APPLE">APPLE</option>
+                    <option value="GOOGLE">GOOGLE</option>
+                    <option value="ONEPLUS">ONEPLUS</option>
+                    <option value="MI">MI</option>
+                    <option value="LENOVO">LENOVO</option>
+                    <option value="ASUS">ASUS</option>
+                    <option value="REALME">REALME</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+            <div class="my-4">
+                <label for="mobile_desc" class="text-light form-label">Enter Your Mobile Description:</label>
+                <textarea required rows="4" class="form-control" id="mobile_desc" name="mobile_desc"
+                    placeholder="Explain about your mobile"></textarea>
+            </div>
+            <div class="my-4">
+                <label for="mobile_model" class="text-light form-label">Enter Your Mobile Model:</label>
+                <input required type="text" class="form-control" id="mobile_model" name="mobile_model"
+                    placeholder="Model name of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_ram" class="text-light form-label">Enter Ram of Mobile in GB:</label>
+                <input required type="number" class="form-control" id="mobile_ram" name="mobile_ram"
+                    placeholder="Ram of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_rom" class="text-light form-label">Enter Rom of Mobile in GB:</label>
+                <input required type="number" class="form-control" id="mobile_rom" name="mobile_rom"
+                    placeholder="Rom of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_battery" class="text-light form-label">Enter the Power of Battery in mAh:</label>
+                <input required type="number" class="form-control" id="mobile_battery" name="mobile_battery"
+                    placeholder="Battery of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_processor" class="text-light form-label">Enter the Processor of Mobile:</label>
+                <input required type="text" class="form-control" id="mobile_processor" name="mobile_processor"
+                    placeholder="Processor of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_front_camera" class="text-light form-label">Enter Front Camera Capacity in MP:</label>
+                <input required type="number" class="form-control" id="mobile_front_camera" name="mobile_front_camera"
+                    placeholder="Front camera capacity">
+            </div>
+            <div class="my-4">
+                <label for="mobile_rear_camera" class="text-light form-label">Enter Rear Camera Capacity in MP:</label>
+                <input required type="number" class="form-control" id="mobile_rear_camera" name="mobile_rear_camera"
+                    placeholder="Rear camera capacity">
+            </div>
+            <div class="my-4">
+                <label for="mobile_screen_size" class="text-light form-label">Enter Screen Size of Mobile in inches:</label>
+                <input required type="text" class="form-control" id="mobile_screen_size" name="mobile_screen_size"
+                    placeholder="Screeen size of mobile">
+            </div>
+            <div class="my-4">
+                <label for="mobile_age" class="text-light form-label">Enter Date of Purchasing:</label>
+                <input required type="date" class="form-control" id="mobile_age" name="mobile_age">
+            </div>
+            <div class="my-4">
+                <label for="mobile_price" class="text-light form-label">Enter the Price of Mobile:</label>
+                <input required type="number" placeholder="Price of your mobile" class="form-control" id="mobile_price"
+                    name="mobile_price">
+            </div>
+            <div class="my-4">
+                <label for="mobile_landing_img" class="form-label text-light">Upload Mobile's landing Image:</label>
+                <input required id="mobile_landing_img" type="file" accept="image/*" class="form-control" name="m_landing_img">
+            </div>
+            <div class="my-4">
+                <label for="other_mobile_img" class="form-label text-light">Upload Mobile's other Images:</label>
+                <input id="other_mobile_img" class="other_images form-control" type="file" accept="image/*" name="m_other_img" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
+    </form>
+
+    <form id="laptop_form" class="d-none" action="" enctype="multipart/form-data" method="post"> {% csrf_token %}
+        <input type="hidden" name="item_type" class="item_type_value">
+        <div id="laptop_details" class="item_details ">
+            <div class="my-4">
+                <label for="laptop_name" class="text-light form-label">Enter Your Laptop Name:</label>
+                <input required type="text" class="form-control" id="laptop_name" name="laptop_name"
+                    placeholder="Enter the name of laptop">
+            </div>
+            <div class="my-2">
+                <select class="p-2 border-light rounded bg-dark text-light" id="laptop_brand" name="laptop_brand" required>
+                    <option value="">Select the Brand</option>
+                    <option value="SAMSUNG">SAMSUNG</option>
+                    <option value="SONY">SONY</option>
+                    <option value="MI">MI</option>
+                    <option value="INFINIX">INFINIX</option>
+                    <option value="APPLE">APPLE</option>
+                    <option value="GOOGLE">GOOGLE</option>
+                    <option value="DELL">DELL</option>
+                    <option value="HP">HP</option>
+                    <option value="LENOVO">LENOVO</option>
+                    <option value="ASUS">ASUS</option>
+                    <option value="ACER">ACER</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+            <div class="my-4">
+                <label for="laptop_desc" class="text-light form-label">Enter Your Laptop Description:</label>
+                <textarea required rows="4" class="form-control" id="laptop_desc" name="laptop_desc"
+                    placeholder="Explain about your laptop"></textarea>
+            </div>
+            <div class="my-4">
+                <label for="laptop_model" class="text-light form-label">Enter Your Laptop Model:</label>
+                <input required type="text" class="form-control" id="laptop_model" name="laptop_model"
+                    placeholder="Model name of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_ram" class="text-light form-label">Enter Ram of Laptop in GB:</label>
+                <input required type="number" class="form-control" id="laptop_ram" name="laptop_ram"
+                    placeholder="Ram of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_rom" class="text-light form-label">Enter Rom of Laptop in GB:</label>
+                <input required type="number" class="form-control" id="laptop_rom" name="laptop_rom"
+                    placeholder="Rom of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_battery" class="text-light form-label">Enter the Power of Battery in mAh:</label>
+                <input required type="number" class="form-control" id="laptop_battery" name="laptop_battery"
+                    placeholder="Battery of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_processor" class="text-light form-label">Enter the Processor of Laptop:</label>
+                <input required type="text" class="form-control" id="laptop_processor" name="laptop_processor"
+                    placeholder="Processor of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_screen_size" class="text-light form-label">Enter Screen Size of Laptop in inches:</label>
+                <input required type="text" class="form-control" id="laptop_screen_size" name="laptop_screen_size"
+                    placeholder="Screeen size of laptop">
+            </div>
+            <div class="my-4">
+                <label for="laptop_age" class="text-light form-label">Enter Date of Purchasing:</label>
+                <input required type="date" class="form-control" id="laptop_age" name="laptop_age">
+            </div>
+            <div class="my-4">
+                <label for="laptop_price" class="text-light form-label">Enter the Price of Laptop:</label>
+                <input required type="number" placeholder="Price of your laptop" class="form-control" id="laptop_price"
+                    name="laptop_price">
+            </div>
+            <div id="laptop_options" class="d-flex justify-content-between">
+                <select required class="p-2 border-light rounded bg-dark text-light" name="storage_type" id="storage_type">
+                    <option value="">Storage Type</option>
+                    <option value="HDD">HDD</option>
+                    <option value="SSD">SSD</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="wifi" id="wifi">
+                    <option value="">WiFi</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="blutooth" id="blutooth">
+                    <option value="">Blutooth</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="touch_screen" id="touch_screen">
+                    <option value="">Touch Screen</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="finger_print_sensor" id="finger_print_sensor">
+                    <option value="">Finger Print Sensor</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+            </div>
+            <div class="my-4">
+                <label for="laptop_landing_img" class="form-label text-light">Upload Laptop's landing Image:</label>
+                <input required id="laptop_landing_img" type="file" accept="image/*" class="form-control" name="laptop_landing_img">
+            </div>
+            <div class="my-4">
+                <label for="other_laptop_img" class="form-label text-light">Upload Laptop's other Images:</label>
+                <input id="other_laptop_img" class="other_images form-control" type="file" accept="image/*" name="other_laptop_img" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
+    </form>
+
+    <form id="other_form" class="d-none" action="" enctype="multipart/form-data" method="post"> {% csrf_token %}
+        <input type="hidden" name="item_type" class="item_type_value">
+        <div id="other_details" class="item_details">
+            <div class="my-4">
+                <label for="item_name" class="text-light form-label">Enter Your Item Name:</label>
+                <input required type="text" class="form-control" id="item_name" name="item_name"
+                    placeholder="Name of item">
+            </div>
+            <div class="my-4">
+                <label for="item_desc" class="text-light form-label">Enter full description of your item:</label>
+                <textarea required rows="4" class="form-control" id="item_desc" name="item_desc"
+                    placeholder="Please describe your item briefly"></textarea>
+            </div>
+            <div class="my-4">
+                <label for="item_price" class="text-light form-label">Enter the Price of your Item:</label>
+                <input required type="number" placeholder="Price of your item" class="form-control" id="item_price"
+                    name="item_price">
+            </div>
+            <div class="my-4">
+                <label for="item_landing_img" class="form-label text-light">Upload Item's landing Image:</label>
+                <input required id="item_landing_img" type="file" accept="image/*" class="form-control" name="item_landing_img">
+            </div>
+            <div class="my-4">
+                <label for="other_item_img" class="form-label text-light">Upload Item's other Images:</label>
+                <input id="other_item_img" class="other_images form-control" type="file" accept="image/*" name="other_item_img" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
+    </form>
+    
+</div>
+
+{% endif %}
+{% endblock body %}
+
+{% block script %}
+
+    <script>
+
+        $('#info_heading').fadeIn('slow');
+        $('#info_heading').removeClass('d-none');
+        
+        $('#item_type').change(()=>{
+            $('.item_type_value').val($('#item_type').val());
+           
+            if($('#item_type').val() == 'CAR'){
+                $('#car_form').fadeIn('slow');
+                $('#car_form').removeClass('d-none');
+                $('#bike_form').addClass('d-none');
+                $('#mobile_form').addClass('d-none');
+                $('#laptop_form').addClass('d-none');
+                $('#other_form').addClass('d-none');
+            }
+            else if($('#item_type').val() == 'BIKE'){
+                $('#bike_form').fadeIn('slow');
+                $('#bike_form').removeClass('d-none');
+                $('#car_form').addClass('d-none');
+                $('#mobile_form').addClass('d-none');
+                $('#laptop_form').addClass('d-none');
+                $('#other_form').addClass('d-none');
+            }
+            else if($('#item_type').val() == 'MOBILE'){
+                $('#mobile_form').fadeIn('slow');
+                $('#mobile_form').removeClass('d-none');
+                $('#car_form').addClass('d-none');
+                $('#bike_form').addClass('d-none');
+                $('#laptop_form').addClass('d-none');
+                $('#other_form').addClass('d-none');
+            }
+            else if($('#item_type').val() == 'LAPTOP'){
+                $('#laptop_form').fadeIn('slow');
+                $('#laptop_form').removeClass('d-none');
+                $('#car_form').addClass('d-none');
+                $('#bike_form').addClass('d-none');
+                $('#mobile_form').addClass('d-none');
+                $('#other_form').addClass('d-none');
+            }
+            else if($('#item_type').val() == 'OTHER'){
+                $('#other_form').fadeIn('slow');
+                $('#other_form').removeClass('d-none');
+                $('#car_form').addClass('d-none');
+                $('#bike_form').addClass('d-none');
+                $('#mobile_form').addClass('d-none');
+                $('#laptop_form').addClass('d-none');
+            }
+            else{
+                $('#other_form').addClass('d-none');
+                $('#car_form').addClass('d-none');
+                $('#bike_form').addClass('d-none');
+                $('#mobile_form').addClass('d-none');
+                $('#laptop_form').addClass('d-none');
+            }
+            
+        });
+    </script>
+
+{% endblock script %}

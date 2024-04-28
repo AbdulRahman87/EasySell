@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Easy-Kart | Edit Your Item
+{% endblock title %}
+
+{% block body %}
+
+    <h1 class="container text-light my-2">Edit your {{item.item_type}} details :-</h1>
+
+    <div class="container mb-4">
+        <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="my-4">
+                <label for="item_name" class="text-light form-label">Update Your {{item.item_type|title}}'s Name:</label>
+                <input required type="text" class="form-control" id="item_name" name="item_name" value="{{item.item_name}}">
+            </div>
+            {% if item.item_type|lower == 'laptop' %}
+            <div class="my-2">
+                <select class="p-2 border-light rounded bg-dark text-light" id="item_brand" name="item_brand" required>
+                    <option value="">Brand</option>
+                    <option {% if item.brand|lower == 'samsung' %} selected{% endif %}  value="SAMSUNG">SAMSUNG</option>
+                    <option {% if item.brand|lower == 'sony' %} selected{% endif %} value="SONY">SONY</option>
+                    <option {% if item.brand|lower == 'mi' %} selected{% endif %} value="MI">MI</option>
+                    <option {% if item.brand|lower == 'infinix' %} selected{% endif %} value="INFINIX">INFINIX</option>
+                    <option {% if item.brand|lower == 'apple' %} selected{% endif %} value="APPLE">APPLE</option>
+                    <option {% if item.brand|lower == 'google' %} selected{% endif %} value="GOOGLE">GOOGLE</option>
+                    <option {% if item.brand|lower == 'dell' %} selected{% endif %} value="DELL">DELL</option>
+                    <option {% if item.brand|lower == 'hp' %} selected{% endif %} value="HP">HP</option>
+                    <option {% if item.brand|lower == 'lenovo' %} selected{% endif %} value="LENOVO">LENOVO</option>
+                    <option {% if item.brand|lower == 'asus' %} selected{% endif %} value="ASUS">ASUS</option>
+                    <option {% if item.brand|lower == 'acer' %} selected{% endif %} value="ACER">ACER</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'mobile' %}
+            <div class="my-2">
+                <select class="p-2 border-light rounded bg-dark text-light" id="item_brand" name="item_brand" required>
+                    <option value="">Brand</option>
+                    <option {% if item.brand|lower == 'samsung' %} selected{% endif %}  value="SAMSUNG">SAMSUNG</option>
+                    <option {% if item.brand|lower == 'vivo' %} selected{% endif %} value="VIVO">VIVO</option>
+                    <option {% if item.brand|lower == 'mi' %} selected{% endif %} value="MI">MI</option>
+                    <option {% if item.brand|lower == 'infinix' %} selected{% endif %} value="INFINIX">INFINIX</option>
+                    <option {% if item.brand|lower == 'apple' %} selected{% endif %} value="APPLE">APPLE</option>
+                    <option {% if item.brand|lower == 'google' %} selected{% endif %} value="GOOGLE">GOOGLE</option>
+                    <option {% if item.brand|lower == 'oppo' %} selected{% endif %} value="OPPO">OPPO</option>
+                    <option {% if item.brand|lower == 'oneplus' %} selected{% endif %} value="ONEPLUS">ONEPLUS</option>
+                    <option {% if item.brand|lower == 'lenovo' %} selected{% endif %} value="LENOVO">LENOVO</option>
+                    <option {% if item.brand|lower == 'asus' %} selected{% endif %} value="ASUS">ASUS</option>
+                    <option {% if item.brand|lower == 'realme' %} selected{% endif %} value="REALME">REALME</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+            {% endif %}
+            <div class="my-4">
+                <label for="item_desc" class="text-light form-label">Update Your {{item.item_type|title}}'s Description:</label>
+                <textarea required rows="4" class="form-control" id="item_desc" name="item_desc">{{item.item_description}}</textarea>
+            </div>
+            {% if item.item_type|lower != 'other' %}
+            <div class="my-4">
+                <label for="item_model" class="text-light form-label">Update Your {{item.item_type|title}}'s model:</label>
+                <input required type="text" class="form-control" id="item_model" name="item_model" value="{{item.model}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'car' %}
+            <div id="car_options" class="d-flex justify-content-between">
+                <select required class="p-2 border-light rounded bg-dark text-light" name="seats" id="seats">
+                    <option value="">No of Seats</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="9">9</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="airbags" id="airbags">
+                    <option value="">No of AirBags</option>
+                    <option value="0">0</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="sunroof" id="sunroof">
+                    <option value="">Sunroof</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="body" id="body">
+                    <option value="">Body Type</option>
+                    <option value="SEDAN">SEDAN</option>
+                    <option value="COUPE">COUPE</option>
+                    <option value="HATCHBACK">HATCHBACK</option>
+                    <option value="SUV">SUV</option>
+                    <option value="MUV">MUV</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="fuel_type" id="fuel_type">
+                    <option value="">Fuel Type</option>
+                    <option value="PETROL">PETROL</option>
+                    <option value="DIESEL">DIESEL</option>
+                    <option value="LPG">LPG</option>
+                    <option value="CNG">CNG</option>
+                    <option value="ELECTRIC">ELECTRIC</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="transmission"
+                    id="transmission">
+                    <option value="">Transmission</option>
+                    <option value="MANUAL">MANUAL</option>
+                    <option value="AUTO">AUTO</option>
+                </select>
+            </div>
+            <div class="my-4">
+                <label for="item_power" class="text-light form-label">Update Your {{item.item_type|title}}'s power (in HP):</label>
+                <input required type="number" class="form-control" id="item_power" name="item_power" value="{{item.power}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'car' or item.item_type|lower == 'bike' %}
+            <div class="my-4">
+                <label for="item_top_speed" class="text-light form-label">Update Your {{item.item_type|title}}'s top speed (in KMPH):</label>
+                <input required type="number" class="form-control" id="item_top_speed" name="item_top_speed" value="{{item.topSpeed}}">
+            </div>
+            <div class="my-4">
+                <label for="item_driven" class="text-light form-label">Update Your {{item.item_type|title}}'s driven KM:</label>
+                <input required type="number" class="form-control" id="item_driven" name="item_driven" value="{{item.driven}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'bike' %}
+            <div class="my-4">
+                <label for="item_engine" class="text-light form-label">Update Your {{item.item_type|title}}'s engine capacity (in cc):</label>
+                <input required type="number" class="form-control" id="item_engine" name="item_engine" value="{{item.engine}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'laptop' or item.item_type|lower == 'mobile' %}
+            <div class="my-4">
+                <label for="item_ram" class="text-light form-label">Update Your {{item.item_type|title}}'s ram (in GB):</label>
+                <input required type="number" class="form-control" id="item_ram" name="item_ram" value="{{item.ram}}">
+            </div>
+            <div class="my-4">
+                <label for="item_rom" class="text-light form-label">Update Your {{item.item_type|title}}'s rom (in GB):</label>
+                <input required type="number" class="form-control" id="item_rom" name="item_rom" value="{{item.rom}}">
+            </div>
+            <div class="my-4">
+                <label for="item_battery" class="text-light form-label">Update Your {{item.item_type|title}}'s battery capacity (in mAh):</label>
+                <input required type="number" class="form-control" id="item_battery" name="item_battery" value="{{item.battery}}">
+            </div>
+            <div class="my-4">
+                <label for="item_processor" class="text-light form-label">Update Your {{item.item_type|title}}'s processor:</label>
+                <input required type="text" class="form-control" id="item_processor" name="item_processor" value="{{item.processor}}">
+            </div>
+            <div class="my-4">
+                <label for="item_screen_size" class="text-light form-label">Update Your {{item.item_type|title}}'s screen size (in inches):</label>
+                <input required type="text" class="form-control" id="item_screen_size" name="item_screen_size" value="{{item.screen_size}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower == 'mobile' %}
+            <div class="my-4">
+                <label for="item_front_camera" class="text-light form-label">Update Your {{item.item_type|title}}'s front camera (in Mega-Pixels):</label>
+                <input required type="number" class="form-control" id="item_front_camera" name="item_front_camera" value="{{item.front_camera}}">
+            </div>
+            <div class="my-4">
+                <label for="item_rear_camera" class="text-light form-label">Update Your {{item.item_type|title}}'s rear camera (in Mega-Pixels):</label>
+                <input required type="number" class="form-control" id="item_rear_camera" name="item_rear_camera" value="{{item.rear_camera}}">
+            </div>
+            {% endif %}
+            {% if item.item_type|lower != 'other' %}
+            <div class="my-4">
+                <label for="item_age" class="text-light form-label">Update Your {{item.item_type|title}}'s purchasing date:</label>
+                <input required type="date" class="form-control" id="item_age" name="item_age" value="{{item.age|date:"Y-m-d"}}">
+            </div>
+            {% endif %}
+            <div class="my-4">
+                <label for="item_price" class="text-light form-label">Update Your {{item.item_type|title}}'s price (in Rupees):</label>
+                <input required type="text" class="form-control" id="item_price" name="item_price" value="{{item.item_price}}">
+            </div>
+            {% if item.item_type|lower == 'laptop' %}
+            <div id="laptop_options" class="d-flex justify-content-between">
+                <select required class="p-2 border-light rounded bg-dark text-light" name="storage_type" id="storage_type">
+                    <option value="">Storage Type</option>
+                    <option {% if item.storage_type|lower == 'hdd' %}selected{% endif %} value="HDD">HDD</option>
+                    <option {% if item.storage_type|lower == 'ssd' %}selected{% endif %} value="SSD">SSD</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="wifi" id="wifi">
+                    <option value="">WiFi</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="blutooth" id="blutooth">
+                    <option value="">Blutooth</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="touch_screen" id="touch_screen">
+                    <option value="">Touch Screen</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+                <select required class="p-2 border-light rounded bg-dark text-light" name="finger_print_sensor" id="finger_print_sensor">
+                    <option value="">Finger Print Sensor</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+            </div>
+            {% endif %}
+            <div class="my-4">
+                <label for="item_landing_img" class="form-label text-light">Update {{item.item_type|title}}'s landing Image:</label>
+                <input id="item_landing_img" type="file" accept="image/*" class="form-control" name="item_landing_img">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Update</button>
+        </form>
+
+        <hr class="container text-secondary">
+        {% if images|length != 0 %}
+        <h2 class="text-center text-light mb-4">Delete Images</h2>
+        {% for image in images %}
+            <div class="mx-3 mx-auto rounded col-sm-8 d-flex justify-content-between my-2 border border-light px-3">
+                <img class="w-25" src="/media/{{image.item_img}}" alt="Image is not Available for some reason">
+                <input type="checkbox" class="checkbox form-check-input my-auto" id="{{image.id}}">
+            </div>
+        {% endfor %}
+        <button id="img_delete_btn" class="btn btn-outline-danger px-5 fs-5 mt-3 d-block mx-auto ">Delete</button>
+        {% endif %}
+    </div>
+
+    <form id="delete_img_form" action="{% url 'DeleteImages' %}" method="post"> {% csrf_token %}
+        <input type="hidden" name="img_ids" id="img_ids">
+        <input type="hidden" name="parameters" id="parameters">
+    </form>
+
+{% endblock body %}
+
+{% block script %}
+    <script>
+        let checkboxes = document.getElementsByClassName('checkbox');
+        let img_delete_btn = document.getElementById('img_delete_btn');
+        let arr = new Set();
+        for(let item of checkboxes){
+            item.addEventListener('click', (e)=>{
+                if (item.checked == true){
+                    arr.add(e.target.id);
+                }
+                else{
+                    arr.delete(e.target.id);
+                }
+            });
+        }
+        img_delete_btn.addEventListener('click', ()=>{
+            if(arr.size != 0){
+                document.getElementById('img_ids').value = Array.from(arr);
+                document.getElementById('parameters').value = `{{item.item_name}},{{item.id}}`;
+                document.getElementById('delete_img_form').submit();
+            }
+            else{
+                alert('Please Select atleat one image to perform this action!');
+            }
+        });
+    </script>
+{% endblock script %}
